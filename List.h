@@ -25,7 +25,7 @@ public:
     myList<T>& Delete(const T &data);//按照内容删除
     void showList();
     int Size() const { return count; }
-    T find(const int i);
+    bool find(const int i,T& data);
 private:
     Node<T> *head;
     int count;
@@ -203,15 +203,16 @@ myList<T>& myList<T>::Delete(const T& data){
 }
 
 template<typename T>
-T myList<T>::find(const int i){
+bool myList<T>::find(const int i,T &data){
     if(i<0 || i > count)
-        throw OutOfBounds();
+        return false;
 
     Node<T> *p = head->next;
     int count_i = 0;
     while(count_i++ < i)
         p = p->next;
-    return p->data;
+    data = p->data;
+    return true;
 }
 
 #endif //LIST_H
