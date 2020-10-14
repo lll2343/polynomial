@@ -30,7 +30,7 @@ polyItem::polyItem(polyItem& copy){
 }
 
 ostream& operator<<(ostream& out,const polyItem& p){
-    out<<p.coef<<" "<<p.expn;
+    out<<p.coef<<"*X^"<<p.expn;
     return out;
 }
 

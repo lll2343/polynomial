@@ -13,7 +13,7 @@ int main(){
     
     polynomial p1(m1);
     polynomial p2 = p1;
-    p2=p1+p1;
+    p2=p1*p1;
     p2.showpolynomial();
 
     return 0;

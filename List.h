@@ -23,6 +23,7 @@ public:
     myList<T>& Insert(const int i,const T& data);
     myList<T>& Delete(const int i,T &data);//按照下标删除，并将该下标处的内容保存到data中
     myList<T>& Delete(const T &data);//按照内容删除
+    myList<T>& SetElem(const int i,const T& data);
     void showList();
     int Size() const { return count; }
     bool find(const int i,T& data) const;
@@ -140,7 +141,7 @@ void myList<T>::showList(){
     Node<T> *p = head->next;
     int i = 0;
     while(p != nullptr){
-        std::cout<<"index:"<<i++<<" "<<" data:"<<p->data<<std::endl;
+        std::cout<<p->data<<"\t";
         p = p->next;
     }
     std::cout<<"\n";
@@ -215,6 +216,21 @@ bool myList<T>::find(const int i,T &data) const {
         p = p->next;
     data = p->data;
     return true;
+}
+
+template<typename T>
+myList<T>& myList<T>::SetElem(const int i,const T& data){
+    if(i<0 || i > count)
+        throw OutOfBounds();
+
+    if(!this->isEmpty()){
+        Node<T> *p = head->next;
+        int count_i=0;
+        while(count_i++ < i )
+            p = p->next;
+        p->data = data;
+    }
+    return *this;
 }
 
 #endif //LIST_H

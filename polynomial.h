@@ -28,6 +28,8 @@ private:
 
 #endif //POLYNOMIAL_H
 
+// # include "polynomial.h"
+
 polynomial& polynomial::operator=(const polynomial& copy)
 {
     this->polyList = copy.polyList;
@@ -95,6 +97,53 @@ polynomial polynomial::operator+(const polynomial& p) const
     fs = lc;
 
     return fs;
+}
+
+polynomial polynomial::operator-(const polynomial& p) const{
+    //对于减法，可以P(x)-Q(x) = P(x) + (-Q(X))
+    myList<polyItem> la = this->polyList;
+    myList<polyItem> lb = p.polyList;
+    //链表下标从零开始
+    int bPos = 0;
+    polyItem bItem;
+    bool bFlag;
+    bFlag = lb.find(bPos,bItem);
+    while(bFlag){
+        bItem.coef = - bItem.coef;
+        lb.SetElem(bPos,bItem);
+        bFlag = lb.find(++bPos,bItem);
+    }
+
+    polynomial fa(la),fb(lb),fc = fa + fb;
+
+    return fc;
+}
+
+polynomial polynomial::operator*(const polynomial& p) const{
+    myList<polyItem> la = this->polyList;
+    myList<polyItem> lb = p.polyList;
+    myList<polyItem> lc;
+    polynomial fMultiply;
+    int aPos = 0,bPos;
+    polyItem aItem,bItem,cItem;
+    bool aFlag,bFlag;
+    aFlag = la.find(aPos,aItem);
+    while(aFlag){
+        bPos = 0;
+        bFlag = lb.find(bPos,bItem);
+        while(bFlag){
+            cItem.coef = aItem.coef * bItem.coef; //系数相乘
+            cItem.expn = aItem.expn + bItem.expn; //指数相加
+            lc.clear();
+            lc.pushBack(cItem);
+            polynomial fc(lc);
+            fMultiply = fMultiply + fc;
+            //取出lb 的下一项
+            bFlag = lb.find(++bPos,bItem);
+        }
+        aFlag = la.find(++aPos,aItem);
+    }
+    return fMultiply;
 }
 
 void polynomial::showpolynomial(){
