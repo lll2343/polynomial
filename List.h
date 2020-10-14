@@ -25,7 +25,7 @@ public:
     myList<T>& Delete(const T &data);//按照内容删除
     void showList();
     int Size() const { return count; }
-    bool find(const int i,T& data);
+    bool find(const int i,T& data) const;
 private:
     Node<T> *head;
     int count;
@@ -33,12 +33,13 @@ private:
 
 template<typename T>
 myList<T>::myList(myList<T>const& another){
-    head = new Node<T>; 
-    this->count = 0;
+    head = new Node<T>;
+    count = 0;
     int count_i = 0;
+    T temp;
     while(count_i < another.count){
-        T temp = another.find(count_i++);
-        pushBack(temp);
+        bool flag = another.find(count_i++,temp);
+        this->pushBack(temp);
     }
 }
 
@@ -63,8 +64,9 @@ template<typename T>
 myList<T>& myList<T>::operator=(myList<T>const& copy){
     this->clear();
     int count_i = 0;
-    while(count_i < copy.count){
-        T temp = copy.find(count_i++);
+    T temp;
+    while(count_i++ < copy.count){
+        copy.find(count_i,temp);
         pushBack(temp);
     }
     return *this;
@@ -203,7 +205,7 @@ myList<T>& myList<T>::Delete(const T& data){
 }
 
 template<typename T>
-bool myList<T>::find(const int i,T &data){
+bool myList<T>::find(const int i,T &data) const {
     if(i<0 || i > count)
         return false;
 
