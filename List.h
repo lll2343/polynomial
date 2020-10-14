@@ -65,8 +65,8 @@ myList<T>& myList<T>::operator=(myList<T>const& copy){
     this->clear();
     int count_i = 0;
     T temp;
-    while(count_i++ < copy.count){
-        copy.find(count_i,temp);
+    while(count_i < copy.count){
+        copy.find(count_i++,temp);
         pushBack(temp);
     }
     return *this;
@@ -206,7 +206,7 @@ myList<T>& myList<T>::Delete(const T& data){
 
 template<typename T>
 bool myList<T>::find(const int i,T &data) const {
-    if(i<0 || i > count)
+    if(i<0 || i >= count)
         return false;
 
     Node<T> *p = head->next;
