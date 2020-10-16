@@ -138,13 +138,17 @@ myList<T>& myList<T>::popFrout(T &data){
 
 template<typename T>
 void myList<T>::showList(){
-    Node<T> *p = head->next;
-    int i = 0;
-    while(p != nullptr){
-        std::cout<<p->data<<"\t";
-        p = p->next;
+    if(isEmpty())
+        std::cout<<"empty"<<std::endl;
+    else{
+        Node<T> *p = head->next;
+        int i = 0;
+        while(p != nullptr){
+            std::cout<<p->data<<"\t";
+            p = p->next;
+        }
+        std::cout<<"\n";
     }
-    std::cout<<"\n";
 }
 
 template<typename T>
